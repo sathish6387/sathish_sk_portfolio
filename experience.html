@@ -15,7 +15,6 @@
 
         <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
           <i class="fas fa-bars" aria-hidden="true"></i>
-          <span class="menu-label">Menu</span>
         </button>
 
         <ul class="nav-links">
@@ -90,4 +89,5 @@
       (function(){ const elems = document.querySelectorAll('.reveal-on-scroll'); if (!elems.length) return; const io = new IntersectionObserver((entries, obs)=>{ entries.forEach(entry=>{ if (entry.isIntersecting) { const el=entry.target; const d = el.dataset.srDelay || 0; if (d) el.style.transitionDelay = d+'ms'; el.classList.add('revealed'); obs.unobserve(el); } }); },{ threshold: 0.12, rootMargin: '0px 0px -8% 0px' }); elems.forEach(el=> io.observe(el)); })();
     </script>
   </body>
+
 </html>
