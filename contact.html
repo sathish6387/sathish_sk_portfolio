@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact — Sathishkumar</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  </head>
+  <body>
+
+    <header class="navbar">
+      <div class="nav-container">
+        <div class="logo"><a href="index.html">Sathishkumar</a></div>
+
+        <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+          <i class="fas fa-bars" aria-hidden="true"></i>
+          <!-- <span class="menu-label">Menu</span> -->
+        </button>
+
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="skills.html">Skills</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="experience.html">Experience</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+
+    <section class="home" id="contact">
+      <div class="home-container">
+
+        <div class="home-content reveal-on-scroll" data-sr-delay="60">
+          <h3>Get in touch</h3>
+          <h1>Contact</h1>
+          <p>I'm always open to new opportunities, collaborations, and interesting projects. Whether you have a freelance job, want to discuss a potential partnership, or simply want to say hello, I'd love to hear from you. Feel free to reach out through any of the contact methods below, and I'll get back to you as soon as possible.</p>
+        </div>
+
+        <div class="contact-card reveal-on-scroll" data-sr-delay="140">
+          <h4>Contact Details</h4>
+          <ul>
+            <li><strong>Email:</strong> <a href="mailto:sathishkumarsk6387@gmail.com">sathishkumarsk6387@gmail.com</a></li>
+            <li><strong>Phone:</strong> <a href="tel:+916380187887">+91 63801 87887</a></li>
+            <li><strong>Location:</strong> Tiruppur, Tamil Nadu, India</li>
+          </ul>
+          <div style="margin-top: 18px; display: flex; gap: 14px;">
+            <a href="https://github.com/sathish6387" target="_blank" rel="noreferrer" title="GitHub"><i class="fab fa-github" style="font-size: 20px; color: var(--text-light);"></i></a>
+            <a href="https://www.instagram.com/its_sathish_g?igsh=MTh3dTgwMHhkM3BrZQ==" target="_blank" rel="noreferrer" title="Instagram"><i class="fab fa-instagram" style="font-size: 20px; color: var(--text-light);"></i></a>
+            <a href="https://x.com/Sathish_sk6" target="_blank" rel="noreferrer" title="X (Twitter)"><i class="fab fa-x-twitter" style="font-size: 20px; color: var(--text-light);"></i></a>
+            <a href="https://www.linkedin.com/in/sathishkumar-g-28a34028a" target="_blank" rel="noreferrer" title="LinkedIn"><i class="fab fa-linkedin" style="font-size: 20px; color: var(--text-light);"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2025 Sathishkumar. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+      // Navbar & mobile behavior
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const menuBtn = document.querySelector('.menu-btn');
+      const navList = document.querySelector('.nav-links');
+      const overlay = document.getElementById('menuOverlay');
+
+      function closeMenu(){ navList.classList.remove('open'); if (menuBtn) menuBtn.setAttribute('aria-expanded','false'); if (overlay) overlay.classList.remove('show'); document.body.classList.remove('no-scroll'); }
+      function openMenu(){ navList.classList.add('open'); if (menuBtn) menuBtn.setAttribute('aria-expanded','true'); if (overlay) overlay.classList.add('show'); document.body.classList.add('no-scroll'); }
+
+      navLinks.forEach(link => { link.addEventListener('click', () => { navLinks.forEach(i=>i.classList.remove('active')); link.classList.add('active'); if (navList.classList.contains('open')) closeMenu(); }); link.addEventListener('touchstart', ()=>link.classList.add('touched'), {passive:true}); link.addEventListener('touchend', ()=>setTimeout(()=>link.classList.remove('touched'),220)); });
+
+      if (menuBtn) menuBtn.addEventListener('click', (e)=>{ const isOpen = navList.classList.contains('open'); if (isOpen) closeMenu(); else openMenu(); e.stopPropagation(); });
+      if (overlay) overlay.addEventListener('click', ()=> closeMenu());
+      document.addEventListener('click', (e)=>{ if (!navList.contains(e.target) && !menuBtn.contains(e.target) && navList.classList.contains('open')) closeMenu(); });
+      document.addEventListener('keydown', (e)=>{ if (e.key==='Escape' && navList.classList.contains('open')) closeMenu(); });
+
+      (function(){ const elems = document.querySelectorAll('.reveal-on-scroll'); if (!elems.length) return; const io = new IntersectionObserver((entries, obs)=>{ entries.forEach(entry=>{ if (entry.isIntersecting) { const el=entry.target; const d = el.dataset.srDelay || 0; if (d) el.style.transitionDelay = d+'ms'; el.classList.add('revealed'); obs.unobserve(el); } }); },{ threshold: 0.12, rootMargin: '0px 0px -8% 0px' }); elems.forEach(el=> io.observe(el)); })();
+    </script>
+  </body>
+</html>

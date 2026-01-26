@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>About — Sathishkumar</title>
+        <link rel="stylesheet" href="style.css">
+        <!-- Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </head>
+    <body>
+
+        <header class="navbar">
+            <div class="nav-container">
+
+                <!-- Logo / Brand -->
+                <div class="logo">
+                    <a href="index.html">Sathishkumar</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+
+                <!-- Menu -->
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="experience.html">Experience</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+
+            </div>
+        </header>
+
+        <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+
+        <!-- about section -->
+        <section class="home" id="about">
+            <div class="home-container">
+
+                <!-- Left: content -->
+                <div class="home-content reveal-on-scroll" data-sr-delay="60">
+                    <h3>About Me</h3>
+                    <h1>Hi, I'm <br>Sathishkumar</h1>
+
+                    <p>
+                        I'm a software developer with experience in building responsive
+                        websites and small applications. I enjoy solving problems, learning
+                        new technologies and collaborating on projects that make an impact.
+                    </p>
+
+                    <p>
+                        My core skills include web development (HTML, CSS, JavaScript),
+                        Python scripting, and building small tools and automations to
+                        improve workflows. I focus on clean, accessible interfaces and
+                        reliable code.
+                    </p>
+
+                </div>
+
+                <!-- Quick facts (styled as cards) -->
+                <div class="about-facts reveal-on-scroll" data-sr-delay="140">
+                    <strong>Quick Facts</strong>
+                    <div class="facts-grid">
+                      <div class="fact-card">
+                        <div class="fact-head">
+                          <i class="fa-solid fa-bullseye fact-icon" aria-hidden="true"></i>
+                          <h5>Focus</h5>
+                        </div>
+                        <p>Web &amp; Python</p>
+                      </div>
+
+                      <div class="fact-card">
+                        <div class="fact-head">
+                          <i class="fa-solid fa-language fact-icon" aria-hidden="true"></i>
+                          <h5>Languages</h5>
+                        </div>
+                        <p>Tamil, English</p>
+                      </div>
+
+                      <div class="fact-card">
+                        <div class="fact-head">
+                          <i class="fa-solid fa-handshake fact-icon" aria-hidden="true"></i>
+                          <h5>Availability</h5>
+                        </div>
+                        <p>Open to opportunities</p>
+                      </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© 2025 Sathishkumar. All Rights Reserved.</p>
+        </footer>
+
+    </body>
+
+    <script>
+        // same mobile menu behavior as index
+        const navLinks = document.querySelectorAll(".nav-links a");
+        const menuBtn = document.querySelector(".menu-btn");
+        const navList = document.querySelector(".nav-links");
+        const overlay = document.getElementById("menuOverlay");
+
+        function closeMenu() {
+            navList.classList.remove("open");
+            if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+            if (overlay) overlay.classList.remove("show");
+            document.body.classList.remove("no-scroll");
+        }
+
+        function openMenu() {
+            navList.classList.add("open");
+            if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
+            if (overlay) overlay.classList.add("show");
+            document.body.classList.add("no-scroll");
+        }
+
+        navLinks.forEach(link => {
+            function setActive() {
+                navLinks.forEach(item => item.classList.remove("active"));
+                link.classList.add("active");
+                if (navList.classList.contains("open")) closeMenu();
+            }
+
+            link.addEventListener("click", setActive);
+            link.addEventListener('touchstart', () => link.classList.add('touched'), { passive: true });
+            link.addEventListener('touchend', () => setTimeout(() => link.classList.remove('touched'), 220));
+        });
+
+        if (menuBtn) {
+            menuBtn.addEventListener("click", (e) => {
+                const isOpen = navList.classList.contains("open");
+                if (isOpen) closeMenu(); else openMenu();
+                e.stopPropagation();
+            });
+        }
+
+        if (overlay) overlay.addEventListener("click", () => closeMenu());
+        document.addEventListener("click", (e) => { if (!navList.contains(e.target) && !menuBtn.contains(e.target) && navList.classList.contains("open")) closeMenu(); });
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape" && navList.classList.contains("open")) closeMenu(); });
+
+        // Quick facts reveal using IntersectionObserver
+        const aboutFacts = document.querySelector('.about-facts');
+        if (aboutFacts) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        aboutFacts.classList.add('reveal');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.18 });
+
+            observer.observe(aboutFacts);
+        }
+
+        // Generic scroll reveal for all pages: .reveal-on-scroll
+        (function(){
+            const elems = document.querySelectorAll('.reveal-on-scroll');
+            if (!elems.length) return;
+
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const d = el.dataset.srDelay || 0;
+                        if (d) el.style.transitionDelay = d + 'ms';
+                        el.classList.add('revealed');
+                        obs.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+            elems.forEach(el => io.observe(el));
+        })();
+    </script>
+
+</html>
